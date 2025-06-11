@@ -26,9 +26,6 @@ Este proyecto es una calculadora web que permite realizar operaciones con matric
 3. Ingresa los valores de las matrices o usa los botones de ejemplo/aleatorio.
 4. Haz clic en "Calcular" para ver el resultado.
 5. Usa "Limpiar" para reiniciar las matrices.
-<<<<<<< HEAD
 
 ---
-=======
->>>>>>> 2e905c9da93b79dc6df33fe93ec0eba5c5db4e3a
 
