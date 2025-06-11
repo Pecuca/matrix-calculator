@@ -13,31 +13,38 @@
     <body>
         <h1>Calculadora de Matrices</h1>
         <div class="container">
-            <label for="matrix-size">Tamaño de la matriz:</label>
-            <select id="matrix-size">
-                <option value="2">2x2</option>
-                <option value="3">3x3</option>
-                <option value="4">4x4</option>
-                <option value="5">5x5</option>
-                <option value="6">6x6</option>
-                <option value="7">7x7</option>
-                <option value="8">8x8</option>
-                <option value="9">9x9</option>
-                <option value="10">10x10</option>
-            </select>
+            <div class="selectors-row">
+                <div class="selector-group">
+                    <label for="matrix-size">Tamaño:</label>
 
-            <label for="operation">Operación:</label>
-            <select id="operation">
-                <option value="sum">Suma (A + B)</option>
-                <option value="sub">Resta (A - B)</option>
-                <option value="sub_ba">Resta (B - A)</option>
-                <option value="mul">Multiplicación (A × B)</option>
-                <option value="scalar">Multiplicación por escalar (k × A)</option>
-                <option value="transpose">Transposición (Aᵗ)</option>
-                <option value="det">Determinante (det(A))</option>
-                <option value="inv">Inversa (A⁻¹)</option>
-                <option value="identity">Matriz Identidad (Iₙ)</option>
-            </select>
+                    <select id="matrix-size">
+                        <option value="2">2x2</option>
+                        <option value="3">3x3</option>
+                        <option value="4">4x4</option>
+                        <option value="5">5x5</option>
+                        <option value="6">6x6</option>
+                        <option value="7">7x7</option>
+                        <option value="8">8x8</option>
+                        <option value="9">9x9</option>
+                        <option value="10">10x10</option>
+                    </select>
+                </div>
+                <div class="selector-group">
+                    <label for="operation">Operación:</label>
+
+                    <select id="operation">
+                        <option value="sum">Suma (A + B)</option>
+                        <option value="sub">Resta (A - B)</option>
+                        <option value="sub_ba">Resta (B - A)</option>
+                        <option value="mul">Multiplicación (A × B)</option>
+                        <option value="scalar">Multiplicación por escalar (k × A)</option>
+                        <option value="transpose">Transposición (Aᵗ)</option>
+                        <option value="det">Determinante (det(A))</option>
+                        <option value="inv">Inversa (A⁻¹)</option>
+                        <option value="identity">Matriz Identidad (Iₙ)</option>
+                    </select>
+                </div>
+            </div>
 
             <div id="scalar-input" style="display:none;">
                 <label for="scalar-value">Escalar (k):</label>

@@ -1,45 +1,31 @@
 # Calculadora de Operaciones con Matrices
 
-Este proyecto es una calculadora de operaciones con matrices basada en la web que permite a los usuarios realizar diversas operaciones sobre matrices de diferentes tamaños. La aplicación cuenta con una interfaz fácil de usar y un menú desplegable para seleccionar el tamaño de la matriz.
-
-## Estructura del Proyecto
-
-```
-matrix-calculator
-├── src
-│   ├── index.html       # Estructura HTML de la aplicación
-│   ├── styles.css       # Estilos de la aplicación
-│   └── scripts.js       # Lógica JavaScript para operaciones con matrices
-├── package.json         # Archivo de configuración npm
-└── README.md            # Documentación del proyecto
-```
+Este proyecto es una calculadora web que permite realizar operaciones con matrices de hasta 10x10 de manera visual e intuitiva.
 
 ## Características
 
-- Selecciona el tamaño de la matriz desde un menú desplegable (2x2 a 10x10).
-- Realiza operaciones básicas con matrices (suma, resta, multiplicación).
-- Diseño responsivo para mejor usabilidad en diferentes dispositivos.
+- **Selección de tamaño de matriz:** Elige entre matrices cuadradas de 2x2 hasta 10x10.
+- **Operaciones soportadas:**
+  - Suma y resta de matrices (A+B, A−B, B−A)
+  - Multiplicación de matrices (A×B)
+  - Multiplicación por escalar (k×A)
+  - Transposición de matriz (Aᵗ)
+  - Determinante (det(A)) con precisión de 4 decimales
+  - Matriz inversa (A⁻¹) con verificación (A×A⁻¹=I)
+  - Generación de matriz identidad (Iₙ)
+- **Entrada manual y validación:** Ingresa los valores de las matrices manualmente, con validación de datos numéricos.
+- **Generación aleatoria y ejemplos:** Llena las matrices con valores aleatorios o ejemplos consecutivos para pruebas rápidas.
+- **Limpieza rápida:** Botón para limpiar todas las entradas.
+- **Interfaz responsiva y moderna:** Visualización clara de matrices, operaciones y resultados.
 
-## Instalación
-
-1. Clona el repositorio:
-   ```
-   git clone <url-del-repositorio>
-   ```
-
-2. Navega al directorio del proyecto:
-   ```
-   cd matrix-calculator
-   ```
-
-3. Instala las dependencias (si las hay):
-   ```
-   npm install
-   ```
 
 ## Uso
 
 1. Abre `src/index.html` en tu navegador web.
-2. Selecciona el tamaño de matriz deseado en el menú desplegable.
-3. Ingresa los valores de la matriz y realiza las operaciones que necesites.
+2. Selecciona el tamaño de matriz y la operación deseada.
+3. Ingresa los valores de las matrices o usa los botones de ejemplo/aleatorio.
+4. Haz clic en "Calcular" para ver el resultado.
+5. Usa "Limpiar" para reiniciar las matrices.
+
+---
 

@@ -99,8 +99,8 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    margin: 20px 0;
+    gap: 0px;
+    margin: 0px 0;
 }
 
 .input-matrices-col {
@@ -143,4 +143,34 @@ button:hover {
     letter-spacing: 2px;
     display: inline-block;
     margin-bottom: 24px;
+}
+
+.selectors-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 48px;
+    margin-bottom: 20px;
+}
+
+.selector-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 220px; /* Igual para ambos grupos */
+    max-width: 220px;
+}
+
+.selector-group label {
+    margin-bottom: 6px;
+    color: #23272f;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+
+.selectors-row select {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
