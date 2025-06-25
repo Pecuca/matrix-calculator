@@ -1,19 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Referencias a los elementos del DOM
+    // DOM references
     const matrixSizeSelect = document.getElementById('matrix-size');
     const operationSelect = document.getElementById('operation');
     const scalarInputDiv = document.getElementById('scalar-input');
     const scalarValueInput = document.getElementById('scalar-value');
-    const matrixContainer = document.getElementById('matrix-container');
-    const matrixBContainer = document.getElementById('matrix-b-container');
     const calculateBtn = document.getElementById('calculate-btn');
     const randomBtn = document.getElementById('random-btn');
     const exampleBtn = document.getElementById('example-btn');
     const clearBtn = document.getElementById('clear-btn');
     const errorMessage = document.getElementById('error-message');
-    const resultContainer = document.getElementById('result-container');
+    const resultMatrixRow = document.getElementById('result-matrix-row');
 
-    // Genera el HTML para los inputs de una matriz de tamaño 'size'
+    // Generate matrix input HTML
     function createMatrixInputsHTML(size, label, idPrefix) {
         let html = `<div><h3>${label}</h3><table class="matrix-table">`;
         for (let i = 0; i < size; i++) {
@@ -27,43 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return html;
     }
 
-    // Muestra las matrices de entrada y el área de resultado según la operación seleccionada
-    function showMatrices() {
-        const size = parseInt(matrixSizeSelect.value);
-        const op = operationSelect.value;
-        const matricesRow = document.getElementById('matrices-row');
-        matricesRow.innerHTML = '';
-
-        let html = '';
-        // Si la operación requiere dos matrices (A y B)
-        if (['sum', 'sub', 'sub_ba', 'mul'].includes(op)) {
-            html += createMatrixInputsHTML(size, 'A', 'A');
-            html += `<div class="operation-sign-big">${getOperationSymbol(op)}</div>`;
-            html += createMatrixInputsHTML(size, 'B', 'B');
-            html += `<div class="operation-sign-big">=</div>`;
-            html += `<div id="result-below"></div>`;
-        } else if (op === 'scalar') {
-            // Si la operación es multiplicación por escalar
-            html += `<div class="operation-sign-big">k ×</div>`;
-            html += createMatrixInputsHTML(size, 'A', 'A');
-            html += `<div class="operation-sign-big">=</div>`;
-            html += `<div id="result-below"></div>`;
-        } else {
-            // Operaciones de una sola matriz
-            html += createMatrixInputsHTML(size, 'A', 'A');
-            html += `<div class="operation-sign-big">=</div>`;
-            html += `<div id="result-below"></div>`;
-        }
-
-        matricesRow.innerHTML = html;
-        scalarInputDiv.style.display = (op === 'scalar') ? 'block' : 'none';
-        errorMessage.textContent = '';
-
-        resultContainer.innerHTML = '';
-        errorMessage.textContent = '';
-    }
-
-    // Obtiene los valores de una matriz desde los inputs
+    // Get matrix values from inputs
     function getMatrixValues(idPrefix, size) {
         const values = [];
         for (let i = 0; i < size; i++) {
@@ -78,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return values;
     }
 
-    // Asigna valores a los inputs de una matriz
+    // Set matrix values to inputs
     function setMatrixValues(idPrefix, matrix) {
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix.length; j++) {
@@ -88,14 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Genera una matriz aleatoria de enteros entre -10 y 10
+    // Random and example matrix generators
     function randomMatrix(size) {
         return Array.from({length: size}, () =>
             Array.from({length: size}, () => Math.floor(Math.random() * 21) - 10)
         );
     }
-
-    // Genera una matriz de ejemplo con números consecutivos
     function exampleMatrix(size) {
         let count = 1;
         return Array.from({length: size}, () =>
@@ -103,28 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
         );
     }
 
-    // Limpia los valores de las matrices de entrada
-    function clearMatrices() {
-        const size = parseInt(matrixSizeSelect.value);
-        setMatrixValues('A', Array(size).fill().map(() => Array(size).fill('')));
-        if (['sum', 'sub', 'sub_ba', 'mul'].includes(operationSelect.value)) {
-            setMatrixValues('B', Array(size).fill().map(() => Array(size).fill('')));
-        }
-        resultContainer.innerHTML = '';
-        errorMessage.textContent = '';
-    }
-
-    // --- Operaciones básicas con matrices ---
+    // Matrix operations
     function addMatrices(A, B) {
-        // Suma de matrices
         return A.map((row, i) => row.map((val, j) => +(val + B[i][j]).toFixed(4)));
     }
     function subMatrices(A, B) {
-        // Resta de matrices
         return A.map((row, i) => row.map((val, j) => +(val - B[i][j]).toFixed(4)));
     }
     function mulMatrices(A, B) {
-        // Multiplicación de matrices
         const n = A.length;
         const result = Array.from({length: n}, () => Array(n).fill(0));
         for (let i = 0; i < n; i++) {
@@ -138,20 +84,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return result;
     }
     function scalarMulMatrix(A, k) {
-        // Multiplicación por escalar
         return A.map(row => row.map(val => +(val * k).toFixed(4)));
     }
     function transposeMatrix(A) {
-        // Transposición de matriz
         return A[0].map((_, i) => A.map(row => row[i]));
     }
     function identityMatrix(size) {
-        // Matriz identidad
         return Array.from({length: size}, (_, i) =>
             Array.from({length: size}, (_, j) => (i === j ? 1 : 0))
         );
     }
-    // Determinante por recursión (expansión de cofactores)
     function determinant(A) {
         const n = A.length;
         if (n === 1) return A[0][0];
@@ -161,9 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const minor = A.slice(1).map(row => row.filter((_, col) => col !== j));
             det += ((j % 2 === 0 ? 1 : -1) * A[0][j] * determinant(minor));
         }
-        return +det.toFixed(4); // Limita a 4 decimales
+        return +det.toFixed(4);
     }
-    // Inversa por Gauss-Jordan
     function inverseMatrix(A) {
         const n = A.length;
         let M = A.map(row => row.slice());
@@ -194,9 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return I.map(row => row.map(val => +val.toFixed(4)));
     }
 
-    // Muestra una matriz como tabla HTML
+    // Display matrix as HTML
     function displayMatrix(matrix, title = '') {
-        let html = title ? `<h4>${title}</h4>` : '';
+        let html = '';
+        if (title) {
+            html += `<div style="text-align:center; margin-bottom:8px;"><h3 style="display:inline-block; margin:0;">${title}</h3></div>`;
+        }
         html += '<table class="matrix-table">';
         matrix.forEach(row => {
             html += '<tr>' + row.map(val => `<td>${val}</td>`).join('') + '</tr>';
@@ -205,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return html;
     }
 
-    // Devuelve el símbolo de la operación para mostrar en la interfaz
+    // Get operation symbol
     function getOperationSymbol(op) {
         switch (op) {
             case 'sum': return '+';
@@ -221,11 +165,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- Eventos de la interfaz ---
-    matrixSizeSelect.addEventListener('change', showMatrices);
-    operationSelect.addEventListener('change', showMatrices);
+    // Render matrices and operation sign
+    function renderMatrices() {
+        const size = parseInt(matrixSizeSelect.value);
+        const op = operationSelect.value;
 
-    // Botón para generar matrices aleatorias
+        // Save current values
+        const currentA = getMatrixValues('A', size) || Array(size).fill().map(() => Array(size).fill(''));
+        const currentB = getMatrixValues('B', size) || Array(size).fill().map(() => Array(size).fill(''));
+
+        // Render A
+        document.getElementById('matrix-a-container').innerHTML = createMatrixInputsHTML(size, 'A', 'A');
+        setMatrixValues('A', currentA);
+
+        // Render B and operation sign if needed
+        if (['sum', 'sub', 'sub_ba', 'mul'].includes(op)) {
+            document.getElementById('matrix-b-container').innerHTML = createMatrixInputsHTML(size, 'B', 'B');
+            setMatrixValues('B', currentB);
+            document.getElementById('operation-sign-stack').textContent = getOperationSymbol(op);
+            document.getElementById('matrix-b-container').style.display = '';
+            document.getElementById('operation-sign-stack').style.display = '';
+        } else {
+            document.getElementById('matrix-b-container').innerHTML = '';
+            document.getElementById('operation-sign-stack').textContent = '';
+            document.getElementById('matrix-b-container').style.display = 'none';
+            document.getElementById('operation-sign-stack').style.display = 'none';
+        }
+
+        // Show/hide scalar input
+        scalarInputDiv.style.display = (op === 'scalar') ? 'block' : 'none';
+    }
+
+    // Per-matrix buttons
+    document.getElementById('example-a-btn').onclick = () => {
+        const size = parseInt(matrixSizeSelect.value);
+        setMatrixValues('A', exampleMatrix(size));
+    };
+    document.getElementById('random-a-btn').onclick = () => {
+        const size = parseInt(matrixSizeSelect.value);
+        setMatrixValues('A', randomMatrix(size));
+    };
+    document.getElementById('example-b-btn').onclick = () => {
+        const size = parseInt(matrixSizeSelect.value);
+        setMatrixValues('B', exampleMatrix(size));
+    };
+    document.getElementById('random-b-btn').onclick = () => {
+        const size = parseInt(matrixSizeSelect.value);
+        setMatrixValues('B', randomMatrix(size));
+    };
+
+    // Main buttons
     randomBtn.addEventListener('click', () => {
         const size = parseInt(matrixSizeSelect.value);
         setMatrixValues('A', randomMatrix(size));
@@ -233,8 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setMatrixValues('B', randomMatrix(size));
         }
     });
-
-    // Botón para cargar matrices de ejemplo
     exampleBtn.addEventListener('click', () => {
         const size = parseInt(matrixSizeSelect.value);
         setMatrixValues('A', exampleMatrix(size));
@@ -242,19 +229,17 @@ document.addEventListener('DOMContentLoaded', function() {
             setMatrixValues('B', exampleMatrix(size));
         }
     });
-
-    // Botón para limpiar matrices
     clearBtn.addEventListener('click', () => {
         const size = parseInt(matrixSizeSelect.value);
         setMatrixValues('A', Array(size).fill().map(() => Array(size).fill('')));
         if (['sum', 'sub', 'sub_ba', 'mul'].includes(operationSelect.value)) {
             setMatrixValues('B', Array(size).fill().map(() => Array(size).fill('')));
         }
-        resultContainer.innerHTML = '';
+        resultMatrixRow.innerHTML = '';
         errorMessage.textContent = '';
     });
 
-    // Botón para calcular el resultado de la operación seleccionada
+    // Calculate button
     calculateBtn.addEventListener('click', () => {
         errorMessage.textContent = '';
         const size = parseInt(matrixSizeSelect.value);
@@ -313,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 result = displayMatrix(invA, 'A⁻¹');
-                // Verificación: A × A⁻¹ = I
                 const prod = mulMatrices(A, invA);
                 result += displayMatrix(prod, 'A × A⁻¹');
                 break;
@@ -321,12 +305,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 result = displayMatrix(identityMatrix(size), `Matriz Identidad I${size}`);
                 break;
         }
-        // Muestra el resultado debajo de las matrices
-        const resultBelow = document.getElementById('result-below');
-        if (resultBelow) resultBelow.innerHTML = result;
+        resultMatrixRow.innerHTML = result;
     });
 
-    // Inicialización: muestra las matrices al cargar la página
-    showMatrices();
+    // On operation or size change, re-render but preserve values
+    matrixSizeSelect.addEventListener('change', renderMatrices);
+    operationSelect.addEventListener('change', renderMatrices);
 
+    // On page load
+    renderMatrices();
 });

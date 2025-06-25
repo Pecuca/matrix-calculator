@@ -10,13 +10,28 @@ h1 {
     color: #ffffff;
 }
 
-select {
-    display: block;
-    margin: 20px auto;
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin: 24px auto 24px auto;
+    justify-content: center;
+    max-width: 700px;
+}
+
+button {
+    flex: 1 1 0;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #000000;
+    background-color: #28a745;
+    color: white;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+button:hover {
+    background-color: #218838;
 }
 
 .container {
@@ -28,39 +43,117 @@ select {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-button {
-    display: block;
+.selectors-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 48px;
+    margin-bottom: 20px;
+}
+
+.selector-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 220px;
+    max-width: 220px;
+}
+
+.selector-group label {
+    margin-bottom: 6px;
+    color: #23272f;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+
+.selectors-row select {
+    margin: 0;
     width: 100%;
+    box-sizing: border-box;
     padding: 10px;
     font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
+    border: 1px solid #000000;
     border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #218838;
+#scalar-input {
+    text-align: center;
+    margin-bottom: 16px;
 }
 
-#matrix-container,
-#matrix-b-container {
-    overflow-x: auto;
-    max-width: 100%;
-    margin-bottom: 10px;
+.matrices-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+    margin-top: 32px;
+    margin-left: 64px; /* Move all matrices to the right */
+}
+
+.matrix-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px; /* More space between matrix/buttons */
+    margin-bottom: 8px;
+}
+
+.matrix-label-col {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px; /* Space between sign and matrix */
+}
+
+.matrix-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.operation-sign-stack {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #444;
+    min-width: 40px;
+    text-align: center;
+}
+
+.result-matrix-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.result-matrix-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.equal-sign {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 8px;
+    text-align: center;
 }
 
 .matrix-table {
     display: inline-table;
     border-collapse: collapse;
-    margin: 10px a;
+    margin: 10px 0;
     background: #ffffff; 
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     padding: 8px;
-    /* Elimina width/min-width para que se ajuste al contenido */
+    overflow-x: auto;
+    max-width: 90vw;
 }
 
 .matrix-table td, .matrix-table th {
@@ -88,89 +181,37 @@ button:hover {
     font-size: 18px;        
 }
 
-.buttons {
+@media (max-width: 900px) {
+    .matrices-stack {
+        margin-left: 0;
+    }
+    .matrix-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .matrix-label-col {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .matrix-buttons {
+        flex-direction: row;
+        gap: 10px;
+        margin-left: 0;
+    }
+}
+
+.matrices-center-row {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-}
-
-.matrices-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-    margin: 0px 0;
-}
-
-.input-matrices-col {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.result-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    min-width: 220px;
-}
-
-.operation-sign {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #444;
-    margin: 0 10px;
-    min-width: 40px;
-    text-align: center;
-}
-
-.operation-sign-big {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #444;
-    margin: 10px 0;
-    text-align: center;
-}
-
-.main-title {
-    color: #23272f;
-    background: #fff;
-    padding: 12px 32px;
-    border-radius: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    letter-spacing: 2px;
-    display: inline-block;
-    margin-bottom: 24px;
-}
-
-.selectors-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 48px;
-    margin-bottom: 20px;
-}
-
-.selector-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 220px; /* Igual para ambos grupos */
-    max-width: 220px;
-}
-
-.selector-group label {
-    margin-bottom: 6px;
-    color: #23272f;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-}
-
-.selectors-row select {
-    margin: 0;
+    gap: 32px;
     width: 100%;
-    box-sizing: border-box;
+    margin-top: 32px;
+}
+
+#matrix-a-container, #matrix-b-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

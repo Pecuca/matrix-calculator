@@ -12,11 +12,16 @@
     </head>
     <body>
         <h1>Calculadora de Matrices</h1>
+        <div class="buttons">
+            <button id="random-btn">Generar Aleatorio</button>
+            <button id="example-btn">Ejemplo</button>
+            <button id="clear-btn">Limpiar</button>
+            <button id="calculate-btn">Calcular</button>
+        </div>
         <div class="container">
             <div class="selectors-row">
                 <div class="selector-group">
                     <label for="matrix-size">Tamaño:</label>
-
                     <select id="matrix-size">
                         <option value="2">2x2</option>
                         <option value="3">3x3</option>
@@ -31,7 +36,6 @@
                 </div>
                 <div class="selector-group">
                     <label for="operation">Operación:</label>
-
                     <select id="operation">
                         <option value="sum">Suma (A + B)</option>
                         <option value="sub">Resta (A - B)</option>
@@ -45,21 +49,28 @@
                     </select>
                 </div>
             </div>
-
             <div id="scalar-input" style="display:none;">
                 <label for="scalar-value">Escalar (k):</label>
                 <input type="number" id="scalar-value" step="any" value="1">
             </div>
-
-            <div id="matrices-row" class="matrices-row"></div>
-
-            <div class="buttons">
-                <button id="random-btn">Generar Aleatorio</button>
-                <button id="example-btn">Ejemplo</button>
-                <button id="clear-btn">Limpiar</button>
-                <button id="calculate-btn">Calcular</button>
-            </div>
             <div id="error-message" style="color:red; margin-top:10px;"></div>
+            <div id="matrices-row" class="matrices-center-row">
+                <div class="matrix-buttons">
+                    <button id="example-a-btn" type="button">Ejemplo A</button>
+                    <button id="random-a-btn" type="button">Aleatorio A</button>
+                </div>
+                <div id="matrix-a-container"></div>
+                <div class="operation-sign-stack" id="operation-sign-stack"></div>
+                <div id="matrix-b-container"></div>
+                <div class="matrix-buttons">
+                    <button id="example-b-btn" type="button">Ejemplo B</button>
+                    <button id="random-b-btn" type="button">Aleatorio B</button>
+                </div>
+            </div>
+            <div class="result-matrix-block">
+                <div class="equal-sign">=</div>
+                <div id="result-matrix-row" class="result-matrix-row"></div>
+            </div>
         </div>
         <script src="scripts.js"></script>
     </body>
